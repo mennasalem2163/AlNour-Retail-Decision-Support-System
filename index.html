@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSS B-01 — Al-Nour Fashion Boutique</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #0a0d14; --card: #111827; --border: #1f2a3c;
+  --orange: #f59e0b; --orange-dim: #92400e;
+  --blue: #3b82f6; --green: #10b981; --red: #ef4444;
+  --text: #f1f5f9; --muted: #64748b; --subtle: #1e293b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 24px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245,158,11,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59,130,246,0.08) 0%, transparent 60%),
+    var(--bg);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--orange);
+  border-radius: 40px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.hero h1 span { color: var(--orange); }
+
+.hero p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--muted);
+  max-width: 640px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.btn-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: #000;
+}
+.btn-primary:hover { background: #fbbf24; transform: translateY(-2px); }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+
+.stat-strip {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+
+.stat { text-align: center; }
+.stat-val { font-family: 'Space Mono', monospace; font-size: 1.8rem; font-weight: 700; color: var(--orange); }
+.stat-lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+
+/* ── SECTIONS ── */
+section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.75rem;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 620px;
+  margin-bottom: 56px;
+}
+
+/* ── FEATURE GRID ── */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { border-color: var(--orange-dim); transform: translateY(-4px); }
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card:hover::before { opacity: 1; }
+
+.card-icon { font-size: 2rem; margin-bottom: 16px; }
+.card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 0.9rem; }
+
+/* ── ARCHITECTURE ── */
+.arch-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 2;
+  overflow-x: auto;
+}
+
+.arch-box .layer  { color: var(--orange); font-weight: 700; }
+.arch-box .file   { color: var(--blue); }
+.arch-box .desc   { color: var(--muted); }
+.arch-box .arrow  { color: var(--green); }
+
+/* ── REGULATION ALERT ── */
+.alert-section {
+  background: linear-gradient(135deg, #1a0a0a 0%, #1f1010 100%);
+  border: 1px solid #3b1515;
+  border-radius: 20px;
+  padding: 48px;
+  text-align: center;
+  margin: 40px 0;
+}
+.alert-section h2 { color: var(--red); }
+.alert-section p { color: #fca5a5; max-width: 640px; margin: 0 auto 24px; }
+.reg-badge {
+  display: inline-block;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: var(--red);
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 36px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--orange), var(--blue));
+}
+.tl-item { position: relative; margin-bottom: 40px; }
+.tl-dot {
+  position: absolute;
+  left: -30px;
+  top: 6px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 2px solid var(--bg);
+}
+.tl-year { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--orange); margin-bottom: 4px; }
+.tl-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+.tl-desc { color: var(--muted); font-size: 0.9rem; }
+
+/* ── TECH STACK ── */
+.tech-pill {
+  display: inline-block;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-family: 'Space Mono', monospace;
+  color: var(--blue);
+  margin: 4px;
+}
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+.checklist li:last-child { border-bottom: none; }
+.check { color: var(--green); font-size: 1.1rem; }
+.bonus { color: var(--orange); font-size: 0.75rem; font-weight: 700;
+         background: rgba(245,158,11,0.1); padding: 2px 8px; border-radius: 4px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="badge">Project B-01 · Decision Support Systems</div>
+  <h1>Shop Operating Hours<br><span>Compliance & Revenue</span><br>Optimization DSS</h1>
+  <p>An Intelligent Decision Support System helping Egyptian clothing retailers
+     survive and thrive under the 9 PM government-mandated closure — Cairo, 2026.</p>
+
+  <div class="btn-group">
+    <a class="btn btn-primary" href="reports/DSS_B01_Report.html" target="_blank">
+      📄 View Full Report
+    </a>
+    <a class="btn btn-outline" href="#features">
+      ⚡ Explore Features
+    </a>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat"><div class="stat-val">60K+</div><div class="stat-lbl">POS Records</div></div>
+    <div class="stat"><div class="stat-val">20</div><div class="stat-lbl">Unit Tests ✓</div></div>
+    <div class="stat"><div class="stat-val">7</div><div class="stat-lbl">Dashboard Pages</div></div>
+    <div class="stat"><div class="stat-val">5</div><div class="stat-lbl">Decision Models</div></div>
+    <div class="stat"><div class="stat-val">MVC</div><div class="stat-lbl">Architecture</div></div>
+  </div>
+</div>
+
+<!-- ── REGULATION ALERT ────────────────────────────────────────────────────── -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+  <div class="alert-section reveal">
+    <div class="reg-badge">🔴 21:00 MANDATORY CLOSURE — ACTIVE 2026</div>
+    <h2>The 9 PM Problem</h2>
+    <p>Egyptian Cabinet Decree 1276 forces all retail shops to close by 9 PM.
+       For Al-Nour Fashion Boutique, this erases the most profitable trading window
+       (21:00–23:00), which historically generated <strong>18–22% of daily revenue</strong>.
+       This DSS quantifies the loss and shows managers exactly how to recover it.</p>
+    <p><strong>Ramadan 2026 additional impact:</strong> The closure also eliminates
+       traditional Ramadan night shopping (21:00–01:00), compounding the seasonal revenue hit.</p>
+  </div>
+</div>
+
+<!-- ── FEATURES ───────────────────────────────────────────────────────────── -->
+<section id="features">
+  <div class="section-label reveal">Dashboard Features</div>
+  <h2 class="reveal">Everything a manager needs,<br>in one place.</h2>
+  <p class="lead reveal">7 dashboard pages powered by 5 decision models —
+     from live KPIs to Ramadan-aware seasonal planning.</p>
+
+  <div class="grid-3">
+    <div class="card reveal">
+      <div class="card-icon">📊</div>
+      <h3>Operations Overview</h3>
+      <p>KPI cards, pre vs post-regulation hourly revenue comparison, weekly heatmap, and category breakdown — all in one glance.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">⚡</div>
+      <h3>Power Hours Optimizer</h3>
+      <p>Composite scoring model ranks every trading hour. Identifies "Power Hours" where deploying max staff and flash deals yields the highest return.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">👥</div>
+      <h3>Smart Staffing Planner</h3>
+      <p>Hourly visitor forecasts drive a staffing allocation model. Automatically recommends when to run restocking vs. when every hand must be on the floor.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🔮</div>
+      <h3>What-If Simulator</h3>
+      <p>Adjust closing hour, discount window (%), and marketing spend. The model instantly projects revenue vs. baseline with a waterfall breakdown.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🏆</div>
+      <h3>Competitor Intel</h3>
+      <p>Gap opportunity scores calculated from competitor busy-hour data. Find the exact hours where rivals are quiet and capture uncontested demand.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">📈</div>
+      <h3>30-Day Forecast</h3>
+      <p>Exponential smoothing (α=0.25) with linear trend component. Adjustable forecast horizon with ±7% confidence bands.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🌙</div>
+      <h3>Ramadan & Calendar</h3>
+      <p>Full Egyptian retail holiday calendar 2025–2026. Quantifies the Ramadan 2026 revenue loss from the 9 PM closure and shows upcoming seasonal peaks.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">💻</div>
+      <h3>CLI Daily Briefing</h3>
+      <p>Run <code style="color:#f59e0b;background:#1e293b;padding:2px 6px;border-radius:4px;">python utils/cli_summary.py</code> for a colour-coded terminal briefing with today's power hours, staffing plan, and top 5 actions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARCHITECTURE ────────────────────────────────────────────────────────── -->
+<section>
+  <div class="section-label reveal">System Design</div>
+  <h2 class="reveal">Clean MVC Architecture</h2>
+  <p class="lead reveal">Model → Controller → View with zero coupling between layers.
+     Every analytical function lives in <code style="color:#3b82f6">analytics.py</code> —
+     the view never touches raw data.</p>
+
+  <div class="arch-box reveal">
+<span class="layer">DATA LAYER</span>
+  <span class="file">data/pos_transactions.csv</span>      <span class="desc">60K+ transactions (2025–2026)</span>
+  <span class="file">data/foot_traffic.csv</span>          <span class="desc">Hourly visitor counts</span>
+  <span class="file">data/competitor_activity.csv</span>   <span class="desc">Competitor busy-hour index</span>
+  <span class="file">data/staffing.csv</span>              <span class="desc">Shift staffing records</span>
+  <span class="file">data/generate_data.py</span>          <span class="desc">Synthetic generator (CAPMAS/EFG calibrated)</span>
+
+<span class="layer">MODEL LAYER</span>  <span class="arrow">← all business logic here</span>
+  <span class="file">models/analytics.py</span>            <span class="desc">KPIs · Forecast · Power Hours · Staffing · What-If · Gap</span>
+
+<span class="layer">CONTROLLER LAYER</span>
+  <span class="file">controllers/dashboard_controller.py</span>  <span class="desc">Routes view ↔ model, formats output</span>
+
+<span class="layer">VIEW LAYER</span>
+  <span class="file">views/app.py</span>                   <span class="desc">7-page Streamlit dashboard (Plotly charts)</span>
+
+<span class="layer">UTILITIES</span>
+  <span class="file">utils/ramadan_calendar.py</span>      <span class="desc">Egyptian holiday calendar 2025–2026</span>
+  <span class="file">utils/cli_summary.py</span>           <span class="desc">Terminal management briefing</span>
+  <span class="file">utils/generate_report.py</span>       <span class="desc">13-slide HTML academic report</span>
+
+<span class="layer">TESTS</span>
+  <span class="file">tests/test_analytics.py</span>        <span class="desc">20 pytest unit tests — 100% passing ✅</span>
+  </div>
+</section>
+
+<!-- ── TIMELINE ────────────────────────────────────────────────────────────── -->
+<section>
+  <div class="section-label reveal">Context</div>
+  <h2 class="reveal">The Regulatory Timeline</h2>
+  <div class="grid-2" style="margin-top:40px;">
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021</div>
+        <div class="tl-title">Cabinet Decree 1276 Issued</div>
+        <div class="tl-desc">Egyptian government mandates 9 PM closure for all retail establishments to reduce energy consumption.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--blue)"></div>
+        <div class="tl-year">2025</div>
+        <div class="tl-title">Pre-Regulation Baseline Year</div>
+        <div class="tl-desc">Al-Nour Fashion Boutique trades until 23:00. Peak revenue window: 19:00–22:00. Total revenue: EGP 33.1M.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--red)"></div>
+        <div class="tl-year">Jan 2026</div>
+        <div class="tl-title">9 PM Rule Enforced</div>
+        <div class="tl-desc">Closure strictly enforced. Late-night revenue window eliminated. Peak compressed to 18:00–21:00 "crunch zone".</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--orange)"></div>
+        <div class="tl-year">Feb–Mar 2026</div>
+        <div class="tl-title">Ramadan 2026 Impact</div>
+        <div class="tl-desc">9 PM closure during Ramadan cuts the traditional 21:00–01:00 shopping window. Estimated EGP 7,500 additional loss.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--green)"></div>
+        <div class="tl-year">Apr 2026</div>
+        <div class="tl-title">DSS Deployed ← We Are Here</div>
+        <div class="tl-desc">This system gives managers the tools to recapture lost revenue through smart scheduling, promotions, and staffing.</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h3 style="margin-bottom:24px;color:var(--muted);font-size:0.9rem;text-transform:uppercase;letter-spacing:2px;">Dr. Safa's Requirements Checklist</h3>
+      <ul class="checklist">
+        <li><span class="check">✅</span> Real-world problem (9 PM Egypt regulation)</li>
+        <li><span class="check">✅</span> Data → Model → Recommendation loop (IDSS)</li>
+        <li><span class="check">✅</span> Time-series analysis (Exp. Smoothing forecast)</li>
+        <li><span class="check">✅</span> Optimization model (Power Hours, Staffing)</li>
+        <li><span class="check">✅</span> MVC clean architecture</li>
+        <li><span class="check">✅</span> Streamlit dashboard (7 pages)</li>
+        <li><span class="check">✅</span> 13-slide academic report with citations</li>
+        <li><span class="check">✅</span> Architecture diagram (SVG)</li>
+        <li><span class="check">✅</span> README with setup instructions</li>
+        <li><span class="check">✅</span> 20 unit tests — all passing</li>
+        <li><span class="check">✅</span> <span class="bonus">+5 BONUS</span> What-If Simulator</li>
+        <li><span class="check">✅</span> <span class="bonus">+5 BONUS</span> Competitor Benchmark module</li>
+        <li><span class="check">✅</span> <span class="bonus">EXTRA</span> Ramadan & Calendar module</li>
+        <li><span class="check">✅</span> <span class="bonus">EXTRA</span> CLI Daily Briefing tool</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH STACK ──────────────────────────────────────────────────────────── -->
+<section style="text-align:center;padding-bottom:80px;">
+  <div class="section-label reveal">Stack</div>
+  <h2 class="reveal">Built With</h2>
+  <div style="margin-top:32px;" class="reveal">
+    <span class="tech-pill">Python 3.12</span>
+    <span class="tech-pill">Pandas 2.2</span>
+    <span class="tech-pill">NumPy 1.26</span>
+    <span class="tech-pill">Streamlit 1.35</span>
+    <span class="tech-pill">Plotly 5.22</span>
+    <span class="tech-pill">pytest 8.2</span>
+    <span class="tech-pill">MVC Pattern</span>
+    <span class="tech-pill">Exp. Smoothing</span>
+    <span class="tech-pill">CAPMAS 2025</span>
+    <span class="tech-pill">EFG Hermes 2025</span>
+  </div>
+
+  <div style="margin-top:56px;" class="reveal">
+    <p style="color:var(--muted);margin-bottom:20px;">Ready to run in 3 commands:</p>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;
+                padding:24px 32px;display:inline-block;text-align:left;
+                font-family:'Space Mono',monospace;font-size:0.9rem;line-height:2.2;">
+      <span style="color:var(--muted)">$</span> <span style="color:var(--green)">pip install</span> <span style="color:var(--text)">-r requirements.txt</span><br>
+      <span style="color:var(--muted)">$</span> <span style="color:var(--green)">python</span> <span style="color:var(--orange)">run.py</span><br>
+      <span style="color:var(--muted)">#</span> <span style="color:var(--muted)">opens at http://localhost:8501</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="font-size:1rem;font-weight:700;margin-bottom:8px;">DSS B-01 · Al-Nour Fashion Boutique</p>
+  <p>Cairo, Egypt · Decision Support Systems Course · 2026</p>
+  <p style="margin-top:8px;">Data: Synthetic, calibrated to CAPMAS 2025 & EFG Hermes Retail Survey 2025</p>
+</footer>
+
+<script>
+// Scroll-triggered reveals
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
